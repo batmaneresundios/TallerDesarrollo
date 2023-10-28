@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="es">
+<body>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-4">
+        <h1>Registros de establecimientos</h1>
+        <div>
+            <a href="{% url 'agregar_colegio' %}">Agregar establecimiento</a>
+        </div>
+    </div>
+
+    <table id="registros" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>RBD</th>
+                <th>Fecha Ingreso</th>
+                <th>Establecimiento</th>
+                <th>Region</th>
+                <th>Comuna</th>
+                <th>Dependencia</th>
+                <th>Rut colegio</th>
+                <th>Monto Plan</th>
+                <th>Mes facturacion</th>
+                <th>Trabajador</th>
+            </tr>
+        </thead>
+            <tbody>
+                {% for colegio in colegios %}
+                <tr>
+                    <td>{{ colegio.rbd }}</td>
+                    <td>{{ colegio.fecha_ingreso }}</td>
+                    <td>{{ colegio.nombre }}</td>
+                    <td>{{ colegio.region }}</td>
+                    <td>{{ colegio.comuna }}</td>
+                    <td>{{ colegio.dependencia }}</td>
+                    <td>{{ colegio.rut_colegio }}</td>
+                    <td>{{ colegio.monto_plan }}</td>
+                    <td>{{ colegio.mes_facturacion }}</td>
+                    <td>{{ colegio.trabajador.nombre }} {{ colegio.trabajador.apellido }}</td>
+                {% endfor %}
+            </tbody>
+    </table>
+</div>
+
+<!-- jQuery, Bootstrap y DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#registros').DataTable();
+    });
+</script>
+
+</body>
+
+
+</html>
+{% endblock %}

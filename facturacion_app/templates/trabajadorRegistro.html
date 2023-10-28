@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Registro de Trabajador</h2>
+
+<form method="post" action="{% url 'trabajador_registro' %}">
+    {% csrf_token %}
+    
+    <label for="rut">RUT:</label>
+    <input type="number" id="rut" name="rut" required>
+    <br><br>
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    <br><br>
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" required>
+    <br><br>
+
+    <label for="correo">Correo:</label>
+    <input type="email" id="correo" name="correo" required>
+    <br><br>
+
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required>
+    <br><br>
+
+    <button type="submit">Registrar Trabajador</button>
+</form>
+
+{% endblock %}

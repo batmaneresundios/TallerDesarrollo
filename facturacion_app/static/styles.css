@@ -1,0 +1,16 @@
+/* Personalización del color verde */
+.navbar-custom {
+    background-color: #4CAF50; /* Este es un tono verde */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-link,
+.navbar-custom .nav-link {
+    color: white; /* Color de los enlaces */
+}
+
+/* Botón con borde blanco */
+.btn-outline-light {
+    border-color: white;
+    color: white;
+}
