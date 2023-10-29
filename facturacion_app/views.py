@@ -1,18 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Trabajador, Colegios
+from .models import Trabajador, Colegios, Cuotas
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.hashers import check_password, make_password
-
 from django.shortcuts import render
 
 def trabajador_login(request):
     if request.method == 'POST':
         rut = request.POST.get('rut')
         password = request.POST.get('password')
-
         try:
             trabajador = Trabajador.objects.get(rut=rut)
             
@@ -60,6 +58,19 @@ def listar_colegios(request):
   
 def agregar_colegio(request):
     if request.method == 'POST':
+        rut_trabajador = request.session.get('rut')
+        if not rut_trabajador:
+            # Si no hay rut en la sesión, redirige al login o muestra un error
+            return redirect('trabajador_login')
+
+        # Obtén la instancia del trabajador usando el rut
+        try:
+            trabajador_instance = Trabajador.objects.get(rut=rut_trabajador)
+        except Trabajador.DoesNotExist:
+            # Maneja el caso en que el trabajador no exista
+            return redirect('trabajador_login')
+            
+    if request.method == 'POST':
         rbd = int(request.POST['rbd'])
         rut_colegio = int(request.POST['rut'])
         nombre = request.POST['nombre']
@@ -68,9 +79,9 @@ def agregar_colegio(request):
         dependencia = request.POST['dependencia']
         fecha_ingreso = request.POST['fecha_ingreso']
         monto_plan = request.POST['monto_plan']
-        mes_facturacion = request.POST['mes_facturacion']
 
         colegios = Colegios(
+            trabajador=trabajador_instance,
             rbd = rbd,
             rut_colegio = rut_colegio,
             nombre = nombre,
@@ -79,10 +90,27 @@ def agregar_colegio(request):
             dependencia= dependencia,
             fecha_ingreso = fecha_ingreso,
             monto_plan =  monto_plan,
-            mes_facturacion = mes_facturacion
             )
         colegios.save()
+        # Una vez que el colegio ha sido guardado, redirige al formulario de calendarización.
+        # Aquí asumo que tienes una vista llamada 'agregar_calendarizacion' que se encarga de mostrar el segundo formulario.
+        return redirect('agregar_calendarizacion', colegios_rbd=colegios.rbd)
+    return render(request, 'agregarColegio.html')
 
-        return redirect('Listacolegios')
-    return render(request, 'AgregarColegio.html')
+def agregar_calendarizacion(request, colegios_rbd):
+    colegios = Colegios.objects.get(rbd=colegios_rbd)
+    return render(request, 'agregarCuotas.html', {'colegio': colegios})
+
+def guardar_calendarizacion(request, colegio_rbd):
+    colegios = Colegios.objects.get(rbd=colegio_rbd)
+    num_cuotas = request.POST['numero_cuotas']
+    monto_total = colegios.monto_plan
+    monto_cuota = monto_total / int(num_cuotas)
+
+    for i in range(1, int(num_cuotas) + 1):
+        fecha_cuota = request.POST['fecha_' + str(i)]
+        Cuotas.objects.create(colegio=colegios, cuotas=num_cuotas, monto_cuota=monto_cuota, fecha_cuota=fecha_cuota)
+
+    return redirect('lista_colegios')
+
 

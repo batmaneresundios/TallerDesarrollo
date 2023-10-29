@@ -17,7 +17,6 @@ class Colegios(models.Model):
     dependencia = models.CharField(max_length=45)
     fecha_ingreso = models.DateField()
     monto_plan = models.IntegerField()
-    mes_facturacion = models.DateField()
 
 class Facturas(models.Model):
     idfacturas = models.IntegerField(primary_key=True)
@@ -32,3 +31,9 @@ class Pagos(models.Model):
     factura = models.ForeignKey(Facturas, related_name='pagos', on_delete=models.CASCADE) # asumiendo que ID_pagos se refiere a facturas
     fecha_pago = models.DateField()
     estado_pago = models.CharField(max_length=45)    
+
+class Cuotas(models.Model):
+    colegio = models.ForeignKey(Colegios, related_name='cuotas', on_delete=models.CASCADE)
+    cuotas = models.IntegerField()
+    fecha_cuota = models.DateField()
+    monto_cuota = models.IntegerField()

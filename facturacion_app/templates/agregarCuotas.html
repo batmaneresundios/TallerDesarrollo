@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Colegios</title>
+    <title>Calendarizacion de pagos {{ colegio.nombre }}</title>
     <!-- CSS de Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -33,47 +33,24 @@
 </nav>
 
 <div class="container mt-5">
-    <h2>Formulario de Colegios</h2>
-    <form action="{% url 'agregar_colegio' %}" method="post">
+    <form action="{% url 'agregar_calendarizacion' colegio.rbd %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="rbd">RBD:</label>
-            <input type="number" class="form-control" id="rbd" name="rbd" required>
+            <label for="rbd">Monto plan</label>
+            <input type="hidden" id="monto_plan_hidden" value="{{ colegio.monto_plan }}">
+            <span id="monto_plan_display">{{ colegio.monto_plan }}</span>
         </div>
         <div class="form-group">
-            <label for="rut">RUT Colegio:</label>
-            <input type="number" class="form-control" id="rut" name="rut" required>
-        </div>
-
+            <label for="rut">Número de Cuotas:</label>
+            <select class="form-control" id="numero_cuotas" name="numero_cuotas" required>
+            </select>            
+         </div>
         <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" maxlength="45" required>
+            <label for="monto_por_cuota"></label>
+            <span id="monto_por_cuota"></span>
         </div>
-
-        <div class="form-group">
-            <label for="region">Región:</label>
-            <select class="form-control" id="regiones" name="region" required>
-            </select>
-            
-        <div class="form-group">
-            <label for="comuna">Comuna:</label>
-                <select class="form-control" id="comunas" name="comuna"></select>
-        </div>
-        <div class="form-group">
-            <label for="dependencia">Dependencia:</label>
-            <input type="text" class="form-control" id="dependencia" name="dependencia"  required>
-        </div>
-
-        <div class="form-group">
-            <label for="fecha_ingreso">Fecha de Ingreso:</label>
-            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" required>
-        </div>
-
-        <div class="form-group">
-            <label for="monto_plan">Monto Plan:</label>
-            <input type="number" class="form-control" id="monto_plan" name="monto_plan" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar y continuar</button>
+        <div id="fechas_facturacion"></div>
+        <button type="submit" class="btn btn-primary">Guardar Calendarizacion</button>
     </form>
 </div>
 
@@ -82,7 +59,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-<script src="{% static 'facturacion_app/js/regiones.js' %}"></script>
+<script src="{% static 'facturacion_app/js/cuotas.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

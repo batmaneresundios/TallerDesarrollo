@@ -24,7 +24,6 @@
                 <th>Dependencia</th>
                 <th>Rut colegio</th>
                 <th>Monto Plan</th>
-                <th>Mes facturacion</th>
                 <th>Trabajador</th>
             </tr>
         </thead>
@@ -39,7 +38,6 @@
                     <td>{{ colegio.dependencia }}</td>
                     <td>{{ colegio.rut_colegio }}</td>
                     <td>{{ colegio.monto_plan }}</td>
-                    <td>{{ colegio.mes_facturacion }}</td>
                     <td>{{ colegio.trabajador.nombre }} {{ colegio.trabajador.apellido }}</td>
                 {% endfor %}
             </tbody>
