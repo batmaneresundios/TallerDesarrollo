@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static %}.
 <!DOCTYPE html>
 <html lang="es">
 <body>
@@ -25,6 +25,10 @@
                 <th>Rut colegio</th>
                 <th>Monto Plan</th>
                 <th>Trabajador</th>
+                <th>Plan de pago</th>
+                <th>Facturas emitidas</th>
+
+
             </tr>
         </thead>
             <tbody>
@@ -39,6 +43,16 @@
                     <td>{{ colegio.rut_colegio }}</td>
                     <td>{{ colegio.monto_plan }}</td>
                     <td>{{ colegio.trabajador.nombre }} {{ colegio.trabajador.apellido }}</td>
+                    <td>
+                        <a href="{% url 'render_calendar' colegio.rbd %}">
+                            <img src="{% static 'facturacion_app/img/calendario.png' %}" alt="Plan de pago">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="calendario.html">
+                            <img src="{% static 'facturacion_app/img/factura.png' %}" alt="Facturas">
+                        </a>
+                    </td>
                 {% endfor %}
             </tbody>
     </table>

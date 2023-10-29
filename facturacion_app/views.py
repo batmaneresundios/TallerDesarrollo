@@ -114,7 +114,7 @@ def guardar_calendarizacion(request, colegio_rbd):
 
 def get_cuotas(request, colegio_rbd):
     colegio = Colegios.objects.get(rbd=colegio_rbd)
-    cuotas = Cuotas.objects.filter(colegio=colegio)
+    cuotas = Cuotas.objects.filter(colegio__rbd=colegio_rbd)
     
     cuotas_list = []
     for cuota in cuotas:
@@ -125,3 +125,5 @@ def get_cuotas(request, colegio_rbd):
         cuotas_list.append(cuota_dict)
     
     return JsonResponse(cuotas_list, safe=False)
+def render_calendar(request, colegio_rbd):
+    return render(request, 'calendario.html', {'colegio_rbd': colegio_rbd})

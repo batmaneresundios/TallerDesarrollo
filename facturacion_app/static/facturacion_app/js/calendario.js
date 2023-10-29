@@ -1,26 +1,27 @@
+const urlParams = new URLSearchParams(window.location.search);
+const colegioRBD = urlParams.get('colegio_rbd');
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'dayGrid' ],
-        defaultDate: new Date(),
-        header: {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
             left: 'prev,next',
             center: 'title',
-            right: 'month,basicWeek,basicDay'
+            right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
         events: function(fetchInfo, successCallback, failureCallback) {
             $.ajax({
-                url: 'get_cuotas',  // Asegúrate de cambiar esto por la URL de tu endpoint
+                url: '/lista_colegios/get_cuotas/' + colegioRBD + '/',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     // Transforma tus datos si es necesario para que tengan el formato adecuado para FullCalendar
                     var transformedEvents = data.map(function(cuota) {
                         return {
-                            title: cuota.monto_cuota,  // Asume que cada cuota tiene un campo 'monto'
-                            start: cuota.fecha_cuota   // Asume que cada cuota tiene un campo 'fecha'
+                            title: cuota.title,  // Asume que cada cuota tiene un campo 'monto'
+                            start: cuota.start   // Asume que cada cuota tiene un campo 'fecha'
                         };
                     });
                     successCallback(transformedEvents);

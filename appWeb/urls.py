@@ -10,6 +10,6 @@ urlpatterns = [
     path('lista_colegios/', views.listar_colegios, name="lista_colegios"),
     path('agregar_colegio/', views.agregar_colegio, name="agregar_colegio"),
     path('agregar_cuotas/<int:colegios_rbd>/', views.agregar_calendarizacion, name="agregar_calendarizacion"),
-    path('guardar_cuotas/<int:colegio_rbd>/', views.guardar_calendarizacion, name="guardar_calendarizacion"),
-    path('get_cuotas/<int:colegio_rbd>/', views.get_cuotas, name='get_cuotas'),
+    path('lista_colegios/calendario/<int:colegio_rbd>/', views.render_calendar, name='render_calendar'),
+    path('lista_colegios/get_cuotas/<int:colegio_rbd>/', views.get_cuotas, name='get_cuotas'),
 ]

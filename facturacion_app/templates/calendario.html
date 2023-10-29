@@ -1,17 +1,16 @@
-
+{% load static %}.
 
 <html>
+    <head>
+        <!-- FullCalendar CSS -->
+        <link href='fullcalendar-scheduler/main.css' rel='stylesheet' />
+    </head>
     <body>
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <button id="prevMonth"> < </button>
-                <span id="currentMonth">October 2023</span>
-                <button id="nextMonth"> > </button>
-            </div>
-            <table class="calendar-table">
-                <!-- Aquí irán las cabeceras y las celdas del calendario -->
-            </table>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <div id="calendar"></div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- FullCalendar JS -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.9/index.global.min.js'></script>    
+        <script src="{% static 'facturacion_app/js/calendario.js' %}"></script>
     </body>
 </html>
