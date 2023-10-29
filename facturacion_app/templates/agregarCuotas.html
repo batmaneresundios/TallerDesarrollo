@@ -33,7 +33,7 @@
 </nav>
 
 <div class="container mt-5">
-    <form action="{% url 'agregar_calendarizacion' colegio.rbd %}" method="post">
+    <form action="{% url 'guardar_calendarizacion' colegio.rbd %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="rbd">Monto plan</label>

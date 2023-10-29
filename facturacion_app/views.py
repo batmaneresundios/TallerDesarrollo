@@ -39,8 +39,7 @@ def trabajador_registro(request):
 
             trabajador = Trabajador(rut=rut, password=password, nombre=nombre, apellido=apellido, correo=correo)
             trabajador.save()
-        
-            return JsonResponse({'status': 'registered'})
+            return redirect ('trabajador_login')        
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
     else:
@@ -102,6 +101,7 @@ def agregar_calendarizacion(request, colegios_rbd):
     return render(request, 'agregarCuotas.html', {'colegio': colegios})
 
 def guardar_calendarizacion(request, colegio_rbd):
+    print(request.POST)
     colegios = Colegios.objects.get(rbd=colegio_rbd)
     num_cuotas = request.POST['numero_cuotas']
     monto_total = colegios.monto_plan
@@ -110,7 +110,18 @@ def guardar_calendarizacion(request, colegio_rbd):
     for i in range(1, int(num_cuotas) + 1):
         fecha_cuota = request.POST['fecha_' + str(i)]
         Cuotas.objects.create(colegio=colegios, cuotas=num_cuotas, monto_cuota=monto_cuota, fecha_cuota=fecha_cuota)
-
     return redirect('lista_colegios')
 
-
+def get_cuotas(request, colegio_rbd):
+    colegio = Colegios.objects.get(rbd=colegio_rbd)
+    cuotas = Cuotas.objects.filter(colegio=colegio)
+    
+    cuotas_list = []
+    for cuota in cuotas:
+        cuota_dict = {
+            "title": str(cuota.monto_cuota),
+            "start": cuota.fecha_cuota.strftime('%Y-%m-%d'),
+        }
+        cuotas_list.append(cuota_dict)
+    
+    return JsonResponse(cuotas_list, safe=False)

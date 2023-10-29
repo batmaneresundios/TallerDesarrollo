@@ -10,11 +10,11 @@ class Trabajador(models.Model):
 class Colegios(models.Model):
     rbd = models.IntegerField(primary_key=True)
     trabajador = models.ForeignKey(Trabajador, related_name='colegios', on_delete=models.CASCADE)
-    rut_colegio = models.CharField(max_length=45)
-    nombre = models.CharField(max_length=45)
-    region = models.CharField(max_length=45)
-    comuna = models.CharField(max_length=45)
-    dependencia = models.CharField(max_length=45)
+    rut_colegio = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+    region = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=100)
+    dependencia = models.CharField(max_length=100)
     fecha_ingreso = models.DateField()
     monto_plan = models.IntegerField()
 
@@ -25,7 +25,7 @@ class Facturas(models.Model):
     colegio = models.ForeignKey(Colegios, related_name='facturas', on_delete=models.CASCADE)
     # El campo ID_pagos parece ser una relación con Pagos, lo definiremos más adelante
     fecha_emision = models.DateField()
-    
+
 class Pagos(models.Model):
     idPagos = models.IntegerField(primary_key=True)
     factura = models.ForeignKey(Facturas, related_name='pagos', on_delete=models.CASCADE) # asumiendo que ID_pagos se refiere a facturas
