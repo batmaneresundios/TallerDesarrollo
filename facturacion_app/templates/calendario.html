@@ -1,16 +1,21 @@
-{% load static %}.
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script>
 
-<html>
-    <head>
-        <!-- FullCalendar CSS -->
-        <link href='fullcalendar-scheduler/main.css' rel='stylesheet' />
-    </head>
-    <body>
-        <div id="calendar"></div>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <!-- FullCalendar JS -->
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.9/index.global.min.js'></script>    
-        <script src="{% static 'facturacion_app/js/calendario.js' %}"></script>
-    </body>
+    </script>
+  </head>
+  <body>
+    <div id='calendar'></div>
+  </body>
 </html>

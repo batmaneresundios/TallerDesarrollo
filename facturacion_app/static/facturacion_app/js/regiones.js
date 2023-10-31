@@ -95,14 +95,14 @@ jQuery(document).ready(function () {
 	});
 	jQuery('#comunas').change(function () {
 		if (jQuery(this).val() == 'sin-region') {
-			alert('selecciones Región');
+			alert('Seleccione una Región');
 		} else if (jQuery(this).val() == 'sin-comuna') {
-			alert('selecciones Comuna');
+			alert('Seleccione una Comuna');
 		}
 	});
 	jQuery('#regiones').change(function () {
 		if (jQuery(this).val() == 'sin-region') {
-			alert('selecciones Región');
+			alert('Seleccione una Región');
 		}
 	});
 

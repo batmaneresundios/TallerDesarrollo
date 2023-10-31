@@ -101,16 +101,22 @@ def agregar_calendarizacion(request, colegios_rbd):
     return render(request, 'agregarCuotas.html', {'colegio': colegios})
 
 def guardar_calendarizacion(request, colegio_rbd):
-    print(request.POST)
-    colegios = Colegios.objects.get(rbd=colegio_rbd)
-    num_cuotas = request.POST['numero_cuotas']
-    monto_total = colegios.monto_plan
-    monto_cuota = monto_total / int(num_cuotas)
+    try:
+        print(request.POST)
+        colegios = Colegios.objects.get(rbd=colegio_rbd)
+        num_cuotas = request.POST['numero_cuotas']
+        monto_total = colegios.monto_plan
+        monto_cuota = monto_total / int(num_cuotas)
 
-    for i in range(1, int(num_cuotas) + 1):
-        fecha_cuota = request.POST['fecha_' + str(i)]
-        Cuotas.objects.create(colegio=colegios, cuotas=num_cuotas, monto_cuota=monto_cuota, fecha_cuota=fecha_cuota)
-    return redirect('lista_colegios')
+        for i in range(1, int(num_cuotas) + 1):
+            fecha_cuota = request.POST['fecha_' + str(i)]
+            Cuotas.objects.create(colegio=colegios, cuotas=num_cuotas, monto_cuota=monto_cuota, fecha_cuota=fecha_cuota)
+    except Exception as e:
+        print(f"Ha ocurrido un error: {e}")
+        # Puedes hacer algo más aquí, como redirigir a una página de error o mostrar un mensaje.
+        return redirect('error_page')
+    else:
+        return redirect('lista_colegios')
 
 def get_cuotas(request, colegio_rbd):
     colegio = Colegios.objects.get(rbd=colegio_rbd)
@@ -125,5 +131,6 @@ def get_cuotas(request, colegio_rbd):
         cuotas_list.append(cuota_dict)
     
     return JsonResponse(cuotas_list, safe=False)
+
 def render_calendar(request, colegio_rbd):
     return render(request, 'calendario.html', {'colegio_rbd': colegio_rbd})
