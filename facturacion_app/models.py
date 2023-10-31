@@ -21,9 +21,8 @@ class Colegios(models.Model):
 class Facturas(models.Model):
     idfacturas = models.IntegerField(primary_key=True)
     total = models.IntegerField()
-    nota_credito = models.IntegerField()
+    nota_credito = models.CharField(max_length=40)
     colegio = models.ForeignKey(Colegios, related_name='facturas', on_delete=models.CASCADE)
-    # El campo ID_pagos parece ser una relación con Pagos, lo definiremos más adelante
     fecha_emision = models.DateField()
 
 class Pagos(models.Model):

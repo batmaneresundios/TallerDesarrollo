@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for factura in facturas %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ factura.colegio.nombre }}</h5>
+                    <p class="card-text">
+                        Nro Factura: {{ factura.idfacturas }} <br>
+                        Total: {{ factura.total }} <br>
+                        Fecha emisión: {{ factura.fecha_emision }} <br>
+                        Nota crédito: {{ factura.nota_credito }} <br>
+                        Estado Pago: 
+                        {% if factura.estado_pago %}
+                            <span class="badge badge-success">Pagado</span>
+                        {% else %}
+                            <span class="badge badge-danger">No pagado</span>
+                        {% endif %}
+                        <br>
+                        Fecha Pago: {{ factura.fecha_pago }}
+                    </p>
+                    <a href="#" class="btn btn-primary">Editar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

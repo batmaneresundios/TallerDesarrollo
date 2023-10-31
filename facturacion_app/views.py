@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Trabajador, Colegios, Cuotas
+from .models import Trabajador, Colegios, Cuotas, Facturas
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.urls import reverse
@@ -134,3 +134,7 @@ def get_cuotas(request, colegio_rbd):
 
 def render_calendar(request, colegio_rbd):
     return render(request, 'calendario.html', {'colegio_rbd': colegio_rbd})
+
+def listar_facturas(request, colegio_rbd):
+    facturas = Facturas.objects.filter(colegio_id=colegio_rbd)
+    return render(request, 'listarFacturas.html', {'facturas': facturas})

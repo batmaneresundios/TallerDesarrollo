@@ -13,4 +13,5 @@ urlpatterns = [
     path('agregar_calendarizacion/<int:colegio_rbd>/', views.guardar_calendarizacion, name='guardar_calendarizacion'),
     path('lista_colegios/calendario/<int:colegio_rbd>/', views.render_calendar, name='render_calendar'),
     path('lista_colegios/get_cuotas/<int:colegio_rbd>/', views.get_cuotas, name='get_cuotas'),
+    path('listar_facturas/<int:colegio_rbd>/', views.listar_facturas, name='listar_facturas'),
 ]

@@ -1,18 +1,23 @@
 /* Personalización del color verde */
-.navbar-custom {
+nav.navbar.navbar-light {
     background-color: #4CAF50; /* Este es un tono verde */
 }
-
+.navbar-light {
+    background-color: #4CAF50 !important; /* Este es un tono verde */
+}
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-link,
 .navbar-custom .nav-link {
-    color: white; /* Color de los enlaces */
+    color: white;
+    text-decoration: none; /* Color de los enlaces */
 }
 
 /* Botón con borde blanco */
 .btn-outline-light {
     border-color: white;
     color: white;
+    font-size: 12px;
+    padding: 12px;
 }
 
 .calendar-container {
@@ -32,6 +37,7 @@
 .calendar-table {
     width: 100%;
     border-collapse: collapse;
+    text-align: center ;
 }
 
 .calendar-table td {
@@ -39,6 +45,42 @@
     height: 80px;
     border: 1px solid #ddd;
     vertical-align: top;
+    margin: 70px;
 }
 
 /* Puedes agregar más estilos según lo necesites */
+
+.calendar-table th {
+    width: 14.28%;
+    height: 70px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    margin: 60px ;
+    color: white;
+
+}
+
+.calendar-table tr {
+    width: 14.28%;
+    height: 80px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    margin: 60px;
+    color: white;
+}
+
+.form-input {
+    width: 100%;
+    margin: 70px;
+}
+
+
+.btn-submit{
+    border-color: #f9f9f9;
+    color: white;
+    font-size: 12px;
+    padding:12px;
+}
+
+
+

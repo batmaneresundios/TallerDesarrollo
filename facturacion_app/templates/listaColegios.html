@@ -3,12 +3,14 @@
 {% load static %}.
 <!DOCTYPE html>
 <html lang="es">
+
 <body>
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-4">
         <h1>Registros de establecimientos</h1>
         <div>
+            
             <a href="{% url 'agregar_colegio' %}">Agregar establecimiento</a>
         </div>
     </div>
@@ -49,7 +51,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="calendario.html">
+                        <a href="{% url 'listar_facturas' colegio.rbd %}">
                             <img src="{% static 'facturacion_app/img/factura.png' %}" alt="Facturas">
                         </a>
                     </td>
