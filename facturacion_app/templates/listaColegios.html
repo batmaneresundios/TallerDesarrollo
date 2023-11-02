@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}.
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
-
+<head>
+    <link rel="stylesheet" href="{% static 'facturacion_app/css/listaColegios.css' %}">
+</head>
 <body>
 
 <div class="container mt-4">
@@ -29,6 +31,8 @@
                 <th>Trabajador</th>
                 <th>Plan de pago</th>
                 <th>Facturas emitidas</th>
+                <th>Agregar factura</th>
+
 
 
             </tr>
@@ -55,6 +59,12 @@
                             <img src="{% static 'facturacion_app/img/factura.png' %}" alt="Facturas">
                         </a>
                     </td>
+                    <td>
+                        <a href="{% url 'agregar_factura' colegio.rbd %}">
+                            <img src="{% static 'facturacion_app/img/agregarfactura.png' %}" alt="Facturas">
+                        </a>
+                    </td>
+
                 {% endfor %}
             </tbody>
     </table>

@@ -1,0 +1,46 @@
+/* Estilos para el navbar */
+.navbar {
+    background-color: #55C787;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+    position: center;
+    overflow: hidden;
+}
+
+/* Estilos para la marca del navbar */
+.navbar-brand {
+    text-decoration: none;
+    color: #333;
+}
+
+.navbar-brand img {
+    width: 30px;
+    height: 24px;
+}
+
+/* Estilos para la lista de navegaciÃ³n */
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.nav-item {
+    margin-right: 15px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+}
+
+.icon {
+    height: 40px;
+    width: 40px;
+}

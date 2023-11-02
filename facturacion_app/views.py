@@ -138,3 +138,25 @@ def render_calendar(request, colegio_rbd):
 def listar_facturas(request, colegio_rbd):
     facturas = Facturas.objects.filter(colegio_id=colegio_rbd)
     return render(request, 'listarFacturas.html', {'facturas': facturas})
+
+def agregar_factura(request, colegio_rbd):
+    colegios = Colegios.objects.all()
+    colegio_seleccionado = Colegios.objects.get(rbd=colegio_rbd)
+    if request.method == 'POST':
+        idfacturas = request.POST.get('idfacturas')
+        total = request.POST.get('total')
+        nota_credito = request.POST.get('nota_credito')
+        fecha_emision = request.POST.get('fecha_emision')
+        colegio_instance = Colegios.objects.get(rbd=colegio_rbd)
+
+        factura = Facturas(
+            idfacturas = idfacturas,
+            total=total,
+            nota_credito=nota_credito,
+            colegio=colegio_instance,
+            fecha_emision=fecha_emision
+        )
+        factura.save()
+        return redirect('agregar_factura', colegio_rbd=colegio_rbd)
+
+    return render(request, 'agregarFactura.html', {'colegios': colegios, 'colegio_seleccionado': colegio_seleccionado})

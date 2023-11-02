@@ -1,8 +1,15 @@
+{% extends 'base.html' %} 
+{% block content %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box-shadow añadido */
+        }
+    </style>
 </head>
 <body>
 
@@ -11,8 +18,10 @@
         {% for factura in facturas %}
         <div class="col-md-4">
             <div class="card mb-4">
+                <div class="card-header"> <!-- Añadida cabecera de la tarjeta -->
+                    {{ factura.colegio.nombre }}
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ factura.colegio.nombre }}</h5>
                     <p class="card-text">
                         Nro Factura: {{ factura.idfacturas }} <br>
                         Total: {{ factura.total }} <br>
@@ -37,3 +46,4 @@
 
 </body>
 </html>
+{% endblock %}
