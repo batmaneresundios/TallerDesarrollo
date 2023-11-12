@@ -24,12 +24,9 @@ class Facturas(models.Model):
     nota_credito = models.CharField(max_length=40)
     colegio = models.ForeignKey(Colegios, related_name='facturas', on_delete=models.CASCADE)
     fecha_emision = models.DateField()
-
-class Pagos(models.Model):
-    idPagos = models.IntegerField(primary_key=True)
-    factura = models.ForeignKey(Facturas, related_name='pagos', on_delete=models.CASCADE) # asumiendo que ID_pagos se refiere a facturas
-    fecha_pago = models.DateField()
-    estado_pago = models.CharField(max_length=45)    
+    fecha_pago = models.DateField(blank=True, null=True)  # Permitir valores nulos
+    estado_pago = models.CharField(max_length=45, blank=True, null=True)  # Permitir valores nulos
+    #He hecho algunos cambios importantes aquí:class Pagos(models.Model):
 
 class Cuotas(models.Model):
     colegio = models.ForeignKey(Colegios, related_name='cuotas', on_delete=models.CASCADE)

@@ -18,32 +18,39 @@
         {% for factura in facturas %}
         <div class="col-md-4">
             <div class="card mb-4">
-                <div class="card-header"> <!-- Añadida cabecera de la tarjeta -->
+                <div class="card-header">
                     {{ factura.colegio.nombre }}
                 </div>
                 <div class="card-body">
-                    <p class="card-text">
+                    <!-- Contenedor de información estática -->
+                    <div id="info-{{ factura.idfacturas }}">
                         Nro Factura: {{ factura.idfacturas }} <br>
                         Total: {{ factura.total }} <br>
                         Fecha emisión: {{ factura.fecha_emision }} <br>
-                        Nota crédito: {{ factura.nota_credito }} <br>
-                        Estado Pago: 
-                        {% if factura.estado_pago %}
-                            <span class="badge badge-success">Pagado</span>
-                        {% else %}
-                            <span class="badge badge-danger">No pagado</span>
-                        {% endif %}
-                        <br>
-                        Fecha Pago: {{ factura.fecha_pago }}
-                    </p>
-                    <a href="#" class="btn btn-primary">Editar</a>
+                        Nota crédito: <span id="nota-{{ factura.idfacturas }}">{{ factura.nota_credito }}</span> <br>
+                        Estado Pago: <span id="estado-{{ factura.idfacturas }}">{{ factura.estado_pago }}</span> <br>
+                        Fecha Pago: <span id="fecha-{{ factura.idfacturas }}">{{ factura.fecha_pago }}</span> <br>
+                        <button onclick="hacerEditable('{{ factura.idfacturas }}')" class="btn btn-primary">Editar</button>
+                    </div>
+                <!-- Formulario de edición, inicialmente oculto -->
+                <div id="form-{{ factura.idfacturas }}" style="display:none;">
+                    <form action="{% url 'actualizar_factura' factura.idfacturas %}" method="post">
+                        {% csrf_token %}
+                        Nota crédito: <input type="text" name="nota_credito" value="{{ factura.nota_credito }}"> <br>
+                        Estado Pago: <select name="estado_pago">
+                            <option input type="text" value="Pagado" {% if factura.estado_pago == 'Pagado' %}selected{% endif %}>Pagado</option>
+                            <option input type="text" value="No pagado" {% if factura.estado_pago == 'No pagado' %}selected{% endif %}>No pagado</option>
+                        </select> <br>
+                        Fecha Pago: <input type="date" name="fecha_pago" value="{{ factura.fecha_pago }}"> <br>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </form>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
-</div>
-
+    {% endfor %}
 </body>
+<script src="{% static 'facturacion_app/js/listarFactura.js' %}"></script>
 </html>
+
 {% endblock %}

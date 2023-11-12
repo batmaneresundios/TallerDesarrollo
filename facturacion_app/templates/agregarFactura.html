@@ -18,7 +18,7 @@
 
 <div class="container mt-5">
     <h2>Formulario de facturas</h2>
-    <form action="{% url 'agregar_factura' colegio_seleccionado.rbd %}" method="post">
+    <form action="{% url 'agregar_factura' colegio_seleccionado.rbd %}" method="post">       
     {% csrf_token %}
         <div class="form-group">
             <label for="idfacturas">Número de factura:</label>

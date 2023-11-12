@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Trabajador, Colegios, Cuotas, Facturas
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
-from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.hashers import check_password, make_password
+from django.contrib import messages
+
 from django.shortcuts import render
+from django.contrib import messages
 
 def trabajador_login(request):
     if request.method == 'POST':
@@ -20,13 +22,14 @@ def trabajador_login(request):
                 request.session['rut'] = trabajador.rut
                 return redirect('lista_colegios')  # Redirige al template listaColegios
             else:
-                # Aquí puedes agregar un mensaje de error si la contraseña es incorrecta
-                return render(request, 'login.html', {'error': 'Contraseña incorrecta'})
-
+                # Agrega un mensaje de error genérico
+                messages.error(request, 'Credenciales incorrectas')
         except Trabajador.DoesNotExist:
-            # Aquí puedes agregar un mensaje de error si el RUT no existe
-            return render(request, 'login.html', {'error': 'RUT no registrado'})
+            # Agrega un mensaje de error genérico
+            messages.error(request, 'Credenciales incorrectas')
+
     return render(request, 'login.html')  # Esta es la página de inicio de sesión
+
 
 def trabajador_registro(request):
     if request.method == 'POST':
@@ -68,34 +71,36 @@ def agregar_colegio(request):
         except Trabajador.DoesNotExist:
             # Maneja el caso en que el trabajador no exista
             return redirect('trabajador_login')
-            
-    if request.method == 'POST':
+        
         rbd = int(request.POST['rbd'])
-        rut_colegio = int(request.POST['rut'])
-        nombre = request.POST['nombre']
-        region = request.POST['region']
-        comuna = request.POST['comuna']
-        dependencia = request.POST['dependencia']
-        fecha_ingreso = request.POST['fecha_ingreso']
-        monto_plan = request.POST['monto_plan']
+        
+        if Colegios.objects.filter(rbd=rbd).exists():
+            messages.error(request, 'El RBD ya existe.')
+        else:
+            rut_colegio = int(request.POST['rut'])
+            nombre = request.POST['nombre']
+            region = request.POST['region']
+            comuna = request.POST['comuna']
+            dependencia = request.POST['dependencia']
+            fecha_ingreso = request.POST['fecha_ingreso']
+            monto_plan = request.POST['monto_plan']
 
-        colegios = Colegios(
-            trabajador=trabajador_instance,
-            rbd = rbd,
-            rut_colegio = rut_colegio,
-            nombre = nombre,
-            region = region,
-            comuna = comuna,
-            dependencia= dependencia,
-            fecha_ingreso = fecha_ingreso,
-            monto_plan =  monto_plan,
+            colegios = Colegios(
+                trabajador=trabajador_instance,
+                rbd = rbd,
+                rut_colegio = rut_colegio,
+                nombre = nombre,
+                region = region,
+                comuna = comuna,
+                dependencia= dependencia,
+                fecha_ingreso = fecha_ingreso,
+                monto_plan =  monto_plan,
             )
-        colegios.save()
-        # Una vez que el colegio ha sido guardado, redirige al formulario de calendarización.
-        # Aquí asumo que tienes una vista llamada 'agregar_calendarizacion' que se encarga de mostrar el segundo formulario.
-        return redirect('agregar_calendarizacion', colegios_rbd=colegios.rbd)
+            colegios.save()
+            # Una vez que el colegio ha sido guardado, redirige al formulario de calendarización.
+            # Aquí asumo que tienes una vista llamada 'agregar_calendarizacion' que se encarga de mostrar el segundo formulario.
+            return redirect('agregar_calendarizacion', colegios_rbd=colegios.rbd)
     return render(request, 'agregarColegio.html')
-
 def agregar_calendarizacion(request, colegios_rbd):
     colegios = Colegios.objects.get(rbd=colegios_rbd)
     return render(request, 'agregarCuotas.html', {'colegio': colegios})
@@ -157,6 +162,26 @@ def agregar_factura(request, colegio_rbd):
             fecha_emision=fecha_emision
         )
         factura.save()
-        return redirect('agregar_factura', colegio_rbd=colegio_rbd)
+        return redirect('listar_facturas', colegio_rbd=colegio_rbd)
 
     return render(request, 'agregarFactura.html', {'colegios': colegios, 'colegio_seleccionado': colegio_seleccionado})
+
+def actualizar_factura(request, id_factura):
+    # Obtén la instancia de Facturas usando get_object_or_404 para manejar el caso en que no exista
+    factura = get_object_or_404(Facturas, pk=id_factura)
+    if request.method == 'POST':
+        nota_credito = request.POST.get('nota_credito')
+        estado_pago = request.POST.get('estado_pago')
+        fecha_pago = request.POST.get('fecha_pago')
+
+        # Actualizar la factura
+        factura.nota_credito = nota_credito
+        factura.estado_pago = estado_pago
+        factura.fecha_pago = fecha_pago
+        factura.save()
+
+        # Redirigir a la lista de facturas del colegio
+        return redirect('listar_facturas', colegio_rbd=factura.colegio.rbd)
+    
+    # Si no es POST, simplemente redirige a la lista de facturas.
+    return redirect('listar_facturas', colegio_rbd=factura.colegio.rbd)

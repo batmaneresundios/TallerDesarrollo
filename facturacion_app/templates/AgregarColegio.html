@@ -16,6 +16,13 @@
 <body>
 <div class="container mt-5">
     <h2>Formulario de Colegios</h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <form action="{% url 'agregar_colegio' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
