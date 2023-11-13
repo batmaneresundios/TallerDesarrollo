@@ -20,6 +20,7 @@
     <table id="registros" class="table table-bordered table-hover">
         <thead>
             <tr>
+                <th>Editar colegio</th>
                 <th>RBD</th>
                 <th>Fecha Ingreso</th>
                 <th>Establecimiento</th>
@@ -40,6 +41,11 @@
             <tbody>
                 {% for colegio in colegios %}
                 <tr>
+                    <td>
+                        <a href="{% url 'editar_colegio' colegio.rbd %}">
+                            <img src="{% static 'facturacion_app/img/edit.png' %}" alt="Plan de pago">
+                        </a>
+                    </td>
                     <td>{{ colegio.rbd }}</td>
                     <td>{{ colegio.fecha_ingreso }}</td>
                     <td>{{ colegio.nombre }}</td>

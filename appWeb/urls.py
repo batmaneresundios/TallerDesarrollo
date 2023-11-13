@@ -15,5 +15,6 @@ urlpatterns = [
     path('lista_colegios/get_cuotas/<int:colegio_rbd>/', views.get_cuotas, name='get_cuotas'),
     path('listar_facturas/<int:colegio_rbd>/', views.listar_facturas, name='listar_facturas'),
     path('agregar_factura/<int:colegio_rbd>/', views.agregar_factura, name='agregar_factura'),
-    path('actualizar_factura/<int:id_factura>/', views.actualizar_factura, name='actualizar_factura')
+    path('actualizar_factura/<int:id_factura>/', views.actualizar_factura, name='actualizar_factura'),
+    path('editar_colegio/<int:rbd>/', views.editar_colegio, name='editar_colegio'),
 ]

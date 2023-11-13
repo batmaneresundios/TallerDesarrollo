@@ -8,6 +8,45 @@ from django.contrib import messages
 
 from django.shortcuts import render
 from django.contrib import messages
+from django import forms
+
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Colegios
+
+def editar_colegio(request, rbd):
+    # Obtén la instancia del colegio usando get_object_or_404 para manejar el caso en que no exista
+    colegio = get_object_or_404(Colegios, rbd=rbd)
+
+    if request.method == 'POST':
+        # Obtener los datos del formulario POST
+        rbd = int(request.POST['rbd'])
+        rut_colegio = int(request.POST['rut'])
+        nombre = request.POST['nombre']
+        region = request.POST['region']
+        comuna = request.POST['comuna']
+        dependencia = request.POST['dependencia']
+        fecha_ingreso = request.POST['fecha_ingreso']
+        monto_plan = request.POST['monto_plan']
+
+        # Actualizar los campos del colegio
+        colegio.rbd = rbd
+        colegio.rut_colegio = rut_colegio
+        colegio.nombre = nombre
+        colegio.region = region
+        colegio.comuna = comuna
+        colegio.dependencia = dependencia
+        colegio.fecha_ingreso = fecha_ingreso
+        colegio.monto_plan = monto_plan
+
+        colegio.save()
+
+        # Redirigir a la lista de colegios
+        return redirect('lista_colegios')
+
+    return render(request, 'editarColegio.html', {'colegio': colegio})
+
 
 def trabajador_login(request):
     if request.method == 'POST':
