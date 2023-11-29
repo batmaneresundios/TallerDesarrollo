@@ -37,7 +37,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware'
 ]
 
@@ -68,11 +67,11 @@ WSGI_APPLICATION = 'appWeb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # O 'django.db.backends.mysql' para MySQL
-        'NAME': 'facturacion',
-        'USER': 'mi_usuario',
-        'PASSWORD': 'mi_contraseña_usuario',
+        'NAME': 'facturas',
+        'USER': 'root',
+        'PASSWORD': '123',
         'HOST': 'localhost',  # O la dirección IP del contenedor Docker
-        'PORT': '3306',
+        'PORT': '3307',
     }
 }
 

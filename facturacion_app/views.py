@@ -5,15 +5,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib import messages
-
 from django.shortcuts import render
-from django.contrib import messages
-from django import forms
-
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Colegios
 
 def editar_colegio(request, rbd):
     # Obtén la instancia del colegio usando get_object_or_404 para manejar el caso en que no exista
@@ -140,6 +132,7 @@ def agregar_colegio(request):
             # Aquí asumo que tienes una vista llamada 'agregar_calendarizacion' que se encarga de mostrar el segundo formulario.
             return redirect('agregar_calendarizacion', colegios_rbd=colegios.rbd)
     return render(request, 'agregarColegio.html')
+
 def agregar_calendarizacion(request, colegios_rbd):
     colegios = Colegios.objects.get(rbd=colegios_rbd)
     return render(request, 'agregarCuotas.html', {'colegio': colegios})
@@ -161,7 +154,7 @@ def guardar_calendarizacion(request, colegio_rbd):
         return redirect('error_page')
     else:
         return redirect('lista_colegios')
-
+    
 def get_cuotas(request, colegio_rbd):
     colegio = Colegios.objects.get(rbd=colegio_rbd)
     cuotas = Cuotas.objects.filter(colegio__rbd=colegio_rbd)
@@ -190,6 +183,7 @@ def agregar_factura(request, colegio_rbd):
         idfacturas = request.POST.get('idfacturas')
         total = request.POST.get('total')
         nota_credito = request.POST.get('nota_credito')
+        estado_pago = request.POST.get('estado_pago')
         fecha_emision = request.POST.get('fecha_emision')
         colegio_instance = Colegios.objects.get(rbd=colegio_rbd)
 
@@ -198,7 +192,8 @@ def agregar_factura(request, colegio_rbd):
             total=total,
             nota_credito=nota_credito,
             colegio=colegio_instance,
-            fecha_emision=fecha_emision
+            fecha_emision=fecha_emision,
+            estado_pago=estado_pago
         )
         factura.save()
         return redirect('listar_facturas', colegio_rbd=colegio_rbd)

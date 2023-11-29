@@ -1,12 +1,13 @@
 window.onload = function() {
     var selectCuotas = document.getElementById("numero_cuotas");
     
-    for (var i = 1; i <= 24; i++) {
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = i + (i === 1 ? " cuota" : " cuotas");
-        selectCuotas.appendChild(option);
+    for(var i = 0; i < numCuotas; i++) {
+        var inputFecha = document.createElement("input");
+        inputFecha.type = "date";
+        inputFecha.name = "fecha_" + (i+1);  // Para tener nombres únicos
+        contenedorFechas.appendChild(inputFecha);
     }
+calcularCuotas();
 };
 
 function calcularCuotas() {
